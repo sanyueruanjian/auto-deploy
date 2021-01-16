@@ -1,0 +1,17 @@
+# 依赖centos环境
+FROM centos:7
+# 指定工作目录（进入容器的默认目录）
+WORKDIR /project
+# 安装vim和git环境
+RUN yum -y update \
+    && yum -y install vim \
+	&& yum -y install git \
+	&& git --version \
+	&& cd ~/ \
+	&& git clone https://hub.fastgit.org/nvm-sh/nvm.git .nvm \
+	&& echo "source ~/.nvm/nvm.sh" >> ~/.bashrc && source ~/.bashrc \
+	&& nvm install v14.15.4 \
+	&& nvm use v14.15.4
+
+
+

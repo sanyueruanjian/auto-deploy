@@ -1,0 +1,8 @@
+FROM mysql:8.0.22
+
+# copy文件，设置apt的阿里镜像
+COPY ./mysql/apt/sources.list /etc/apt/sources.list
+
+RUN apt-get update -y \
+    && apt-get install -y cron \
+	&& service cron start
