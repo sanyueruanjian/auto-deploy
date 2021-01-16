@@ -1,0 +1,4 @@
+# 公共业务网桥：marchsoft_biz_net
+networks:
+  marchsoft_biz_net:
+    external: true
