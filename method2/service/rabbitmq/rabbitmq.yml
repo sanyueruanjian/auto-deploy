@@ -1,0 +1,21 @@
+  # 消息队列 rabbitmq ----------------------------------------------------------- 
+  REPLACE_NAME:
+    container_name: REPLACE_NAME
+    image: "${RABBITMQ_IMAGE}"
+    hostname: REPLACE_NAME
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+    networks:
+      - marchsoft_biz_net
+    ports: 
+      - "REPLACE_PORT1:5672"
+      - "REPLACE_PORT2:15672"
+    volumes:
+      - "${GLOBAL_PATH}/REPLACE_CONTAINER_PATH/data:/usr/local/rabbitMq/data"
+      - "${GLOBAL_PATH}/REPLACE_CONTAINER_PATH/log:/usr/local/rabbitMq/log"
+    environment:
+      RABBITMQ_DEFAULT_VHOST: "${RABBITMQ_DEFAULT_VHOST}"
+      RABBITMQ_DEFAULT_USER: "${RABBITMQ_DEFAULT_USER}"
+      RABBITMQ_DEFAULT_PASS: "${RABBITMQ_DEFAULT_PASS}"

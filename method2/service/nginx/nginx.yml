@@ -1,0 +1,21 @@
+  # nginx -------------------------------------------------------------
+  REPLACE_NAME:
+    container_name: REPLACE_NAME
+    image: "${NGINX_IMAGE}"
+    hostname: REPLACE_NAME
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+    networks:
+      - marchsoft_biz_net
+    ports: 
+      - "80:80"
+      - "443:443"
+      - "8000-8080:8000-8080"
+    volumes:
+      # 弊端：宿主机必须要有这些文件，否则是空的
+      - "${GLOBAL_PATH}/REPLACE_CONTAINER_PATH/nginx.conf:/etc/nginx/nginx.conf"
+      - "${GLOBAL_PATH}/REPLACE_CONTAINER_PATH/conf.d:/etc/nginx/conf.d"
+      - "${GLOBAL_PATH}/REPLACE_CONTAINER_PATH/logs:/var/log/nginx"
+      - "${GLOBAL_PATH}/project:/project"
