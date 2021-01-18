@@ -23,6 +23,14 @@ GLOBAL_PATH=`awk -F "=" '/GLOBAL_PATH/{print $2}' .env`
 
 # 每个容器构建前需做的准备
 prepare(){
+    # 如果docker-compose不存在，则进行下载
+    if [ ! -e "/usr/local/bin/docker-compose" ]; then
+        echo "未安装docker-compose，正在进行安装..."
+        curl -o /usr/local/bin/docker-compose  http://elltor-blog.oss-cn-hangzhou.aliyuncs.com/software/docker-compose
+        chmod +x /usr/local/bin/docker-compose
+        echo "docker-compose 安装完成"
+    fi    
+    
     # 创建公共业务网桥
     docker network ls | grep "marchsoft_biz_net" 2>/dev/null 1>&2
     if [ $? -ne 0 ]; then

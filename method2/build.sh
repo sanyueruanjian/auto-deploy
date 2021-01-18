@@ -11,13 +11,13 @@
 PROJECT_NAME=safe_keyuan
 
 # 设置构建容器的数量, 值为非负数, 如果不构建填：0
-mysql=0
-nginx=0
-nvm=0
-redis=0
-marchsoft_api=0
-rabbitmq=0
-portainer=0
+mysql=2
+nginx=1
+nvm=1
+redis=2
+marchsoft_api=1
+rabbitmq=1
+portainer=1
 #----------------------------------------------------
 
 
@@ -32,14 +32,6 @@ COMMON_DIR="$PWD/COMMON"
 # ----- 操作前准备工作，格式转换、软件安装、创建目录... ------
 # 文件格式转换，将本文件夹下的dos格式文件转换为unix格式文件 #输出重定向到黑洞文件
 dos2unix `find . -type f` 2>/dev/null 1>&2 
-
-# 如果docker-compose不存在，则进行下载
-if [ ! -e "/usr/local/bin/docker-compose" ]; then
-    echo "未安装docker-compose，正在进行安装..."
-    curl -o /usr/local/bin/docker-compose  http://elltor-blog.oss-cn-hangzhou.aliyuncs.com/software/docker-compose
-    chmod +x /usr/local/bin/docker-compose
-    echo "docker-compose 安装完成"
-fi
 
 # 对文件夹进行处理，如果存在将之前的清空
 if [ -e "$PROJECT_DIR" ]; then
