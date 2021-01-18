@@ -13,5 +13,5 @@
     networks:
       - marchsoft_biz_net
     volumes:
-      - "${GLOBAL_PATH:-/root}/project:/project"
+      - "${GLOBAL_PATH}/project:/project"
     tty: true

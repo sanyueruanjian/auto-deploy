@@ -1,4 +1,4 @@
-  # 后端api项目容器（推荐以项目名命名） ------------------------------------
+  # 后端 api 项目容器（推荐以项目名命名） ------------------------------------
   REPLACE_NAME:
     container_name: REPLACE_NAME
     hostname: REPLACE_NAME
@@ -13,7 +13,7 @@
     networks:
       - marchsoft_biz_net
     volumes:
-      - "${GLOBAL_PATH:-/root}/project:/project"
+      - "${GLOBAL_PATH}/project:/project"
     environment:
       - TZ=Asia/Shanghai
     # 配置容器的依赖、启动先后

@@ -1,7 +1,7 @@
-  # 消息队列 ----------------------------------------------------------- 
+  # 消息队列 rabbitmq ----------------------------------------------------------- 
   REPLACE_NAME:
     container_name: REPLACE_NAME
-    image: "${RABBITMQ_IMAGE:-rabbitmq:management}"
+    image: "${RABBITMQ_IMAGE}"
     hostname: REPLACE_NAME
     deploy:
       restart_policy:
@@ -13,9 +13,9 @@
       - "REPLACE_PORT1:5672"
       - "REPLACE_PORT2:15672"
     volumes:
-      - "${GLOBAL_PATH:-/root}/rabbitmq/data:/usr/local/rabbitMq/data"
-      - "${GLOBAL_PATH:-/root}/rabbitmq/log:/usr/local/rabbitMq/log"
+      - "${GLOBAL_PATH}/REPLACE_CONTAINER_PATH/data:/usr/local/rabbitMq/data"
+      - "${GLOBAL_PATH}/REPLACE_CONTAINER_PATH/log:/usr/local/rabbitMq/log"
     environment:
-      RABBITMQ_DEFAULT_VHOST: "${RABBITMQ_DEFAULT_VHOST:-/}"
-      RABBITMQ_DEFAULT_USER: "${RABBITMQ_DEFAULT_USER:-root}"
-      RABBITMQ_DEFAULT_PASS: "${RABBITMQ_DEFAULT_PASS:-123456}"
+      RABBITMQ_DEFAULT_VHOST: "${RABBITMQ_DEFAULT_VHOST}"
+      RABBITMQ_DEFAULT_USER: "${RABBITMQ_DEFAULT_USER}"
+      RABBITMQ_DEFAULT_PASS: "${RABBITMQ_DEFAULT_PASS}"
