@@ -8,16 +8,16 @@
 
 #------ 构建 docker-compose.yml 需填的信息-------------
 # 项目名，这是必填项
-PROJECT_NAME=safe_keyuan
+PROJECT_NAME=my_project_name
 
 # 设置构建容器的数量, 值为非负数, 如果不构建填：0
-mysql=2
-nginx=1
-nvm=1
-redis=2
-marchsoft_api=1
-rabbitmq=1
-portainer=1
+mysql=0
+nginx=0
+nvm=0
+redis=0
+marchsoft_api=0
+rabbitmq=0
+portainer=0
 #----------------------------------------------------
 
 
