@@ -17,26 +17,26 @@
 ## 项目结构（Project Structure）
 
 ```
-- common 						服务器通用脚本
-	- container-script 			仅容器使用的脚本
-	- server-script 			服务器脚本
-- compose 						compose 的 yml 配置文件的依赖
-	- header-config.yml			
-	- footer-config.yml
-	- docker-compose.env
-	- docker-compose.yml 		完成 compose 配置文件
-	- project-manage.sh 		方案启动脚本
-- service 						放置独立的 docker-compose 服务
-	- marchsoft-api 			运行后端服务容器
-	- mysql
-	- nginx
-	- nvm 
-	- portainer
-	- rabbitmq
-	- redis
-	- shell-template.sh 
-- target 						放置生成容器构建方案
-- build.sh 						启动构建入口
+- common                           服务器通用脚本
+    - container-script             仅容器使用的脚本
+    - server-script                服务器脚本
+- compose                          compose 的 yml 配置文件的依赖
+    - header-config.yml            
+    - footer-config.yml
+    - docker-compose.env
+    - docker-compose.yml           完成 compose 配置文件
+    - project-manage.sh            方案启动脚本
+- service                          放置独立的 docker-compose 服务
+    - marchsoft-api                运行后端服务容器
+    - mysql
+    - nginx
+    - nvm 
+    - portainer
+    - rabbitmq
+    - redis
+    - shell-template.sh 
+- target                           放置生成容器构建方案
+- build.sh                         启动构建入口
 ```
 
 
@@ -290,7 +290,6 @@ docker-compose.yml 配置文件部分内容
 欢迎任何人为项目添砖加瓦、反馈问题（issue）。
 
 参与贡献可以先联系开发者，我们会给与一些指导。
-
 
 
 ## 开发者、技术支持（Develop & Support）
