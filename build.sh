@@ -31,7 +31,7 @@ COMMON_DIR="$PWD/COMMON"
 
 # ----- 操作前准备工作，格式转换、软件安装、创建目录... ------
 # 文件格式转换，将本文件夹下的dos格式文件转换为unix格式文件 #输出重定向到黑洞文件
-dos2unix `find . -type f` 2>/dev/null 1>&2 
+#dos2unix `find . -type f` 2>/dev/null 1>&2 
 
 # 对文件夹进行处理，如果存在将之前的清空
 if [ -e "$PROJECT_DIR" ]; then
@@ -51,8 +51,8 @@ fi
 #---------------------------------------------------------------------------------------
 
 # 拷贝环境变量到工作区
-cat $PWD/common/docker-compose.env > $PROJECT_DIR/.env
-cat $PWD/common/project-manage.sh > "$PROJECT_DIR/${PROJECT_NAME}.sh"
+cat $PWD/compose/docker-compose.env > $PROJECT_DIR/.env
+cat $PWD/compose/project-manage.sh > "$PROJECT_DIR/${PROJECT_NAME}.sh"
 chmod +x "$PROJECT_DIR/${PROJECT_NAME}.sh"
 # 修改启动项目shell脚本里的项目名
 sed -i "s/PROJECT_NAME=.*/PROJECT_NAME=${PROJECT_NAME}/g" "$PROJECT_DIR/${PROJECT_NAME}.sh"
@@ -71,7 +71,7 @@ if [ ! -e "$PROJECT_DIR/docker-compose.yml" ]; then
 fi
 
 # 加载 docker-compose的header配置
-cat $PWD/common/base/header.yml > $PROJECT_DIR/docker-compose.yml
+cat $PWD/compose/header-config.yml > $PROJECT_DIR/docker-compose.yml
 
 # 生成 mysql 容器配置
 for ((i=1; i<=$mysql; i++)){
@@ -108,7 +108,7 @@ for ((i=1; i<=$portainer; i++)){
     sh $SERVICE_DIR/portainer/portainer.sh $i $SERVICE_DIR/portainer $PROJECT_NAME $PROJECT_DIR
 }
 
-cat $PWD/common/base/footer.yml >> $PROJECT_DIR/docker-compose.yml
+cat $PWD/compose/footer-config.yml >> $PROJECT_DIR/docker-compose.yml
 
 echo "构建脚本(build.sh)执行完成"
 
