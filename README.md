@@ -4,26 +4,30 @@
 
 ## 项目简介（Introduction）
 
-基于 docker、docker-compose、shell 的自动化构建和编排容器工具。使用时仅需一点 linux 和 shell 基础即可轻松构建多个容器。
+基于 docker、docker-compose、shell 的自动化构建和编排容器。使用时仅需一点 linux 基础即可轻松构建多个容器。
 
 **项目状态: **基本功能已经完成，正在完善细节。
 
 ## 主要特性（ Characteristic）
 
-* 多构建方案生成，一次生成可多台服务器构建
+* 多构建方案生成，一次生成多台服务器构建
 * 构建方案独立，生成的构建方案可以跟随项目
 * 操作简单，交互式操作，仅需输入少量参数就可以生成完整构建容器方案
 
 ## 项目结构（Project Structure）
 
 ```
-- common 通用脚本
-	- base
+- common 						服务器通用脚本
+	- container-script 			仅容器使用的脚本
+	- server-script 			服务器脚本
+- compose 						compose 的 yml 配置文件的依赖
+	- header-config.yml			
+	- footer-config.yml
 	- docker-compose.env
-	- docker-compose.yml
-	- project-manage.sh
-- service 放置独立的docker-compose服务
-	- marchsoft-api 运行后端服务容器
+	- docker-compose.yml 		完成 compose 配置文件
+	- project-manage.sh 		方案启动脚本
+- service 						放置独立的 docker-compose 服务
+	- marchsoft-api 			运行后端服务容器
 	- mysql
 	- nginx
 	- nvm 
@@ -31,8 +35,8 @@
 	- rabbitmq
 	- redis
 	- shell-template.sh 
-- target 放置生成容器构建方案
-- build.sh 启动构建
+- target 						放置生成容器构建方案
+- build.sh 						启动构建入口
 ```
 
 
@@ -41,10 +45,10 @@
 
 #### 1. 使用前准备
 
-1.1 使用前置技能 
+1.1 使用前置技能
 
 * Linux基础，熟悉常用命令：cd、cp、ls、cat、mv、vi/vim、sh、yum、ps、rm
-* docker基础，docker常用命令：run、exec、ps、rm、network、build
+* docker基础，熟悉docker常用命令：run、exec、ps、rm、network、build
 
 1.2 安装以下软件，安装完软件后强烈推荐配置 docker 镜像加速和 yum 源，这样构建过程会更顺畅。
 
@@ -272,18 +276,18 @@ docker-compose.yml 配置文件部分内容
 
 ## 学习网站推荐（Learn & Study）
 
-* 官方 docker-compose : https://docs.docker.com/compose/
-* 官方 compose file 3 : https://docs.docker.com/compose/compose-file/compose-file-v3/
-* 官方 docker : https://docs.docker.com/engine/
+* 官方 docker-compose : https://docs.docker.com/compose
+* 官方 compose file 3 : https://docs.docker.com/compose/compose-file/compose-file-v3
+* 官方 docker : https://docs.docker.com/engine
 * bilibili docker & docker-compose 教程 : https://www.bilibili.com/video/BV1ZT4y1K75K
 * docker 中文教程 1 : http://www.dockerinfo.net/document
-* docker 中文教程 2 : https://docker_practice.gitee.io/zh-cn/
+* docker 中文教程 2 : https://docker_practice.gitee.io/zh-cn
 
 
 
 ## 贡献（Contribute）
 
-项目欢迎任何人添砖加瓦、反馈问题（issue）。
+欢迎任何人为项目添砖加瓦、反馈问题（issue）。
 
 参与贡献可以先联系开发者，我们会给与一些指导。
 
