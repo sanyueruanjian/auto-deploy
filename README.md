@@ -25,7 +25,7 @@
     - footer-config.yml
     - docker-compose.env
     - docker-compose.yml           完成 compose 配置文件
-    - project-manage.sh            方案启动脚本
+    - compose.sh                   方案启动脚本
 - service                          放置独立的 docker-compose 服务
     - marchsoft-api                运行后端服务容器
     - mysql
@@ -47,8 +47,8 @@
 
 1.1 使用前置技能
 
-* Linux基础，熟悉常用命令：cd、cp、ls、cat、mv、vi/vim、sh、yum、ps、rm
-* docker基础，熟悉docker常用命令：run、exec、ps、rm、network、build
+* Linux基础，熟悉常用命令：cd、ls、cp、cat、mv、vi/vim、sh、yum、rm
+* docker基础，熟悉docker常用命令：run、exec、ps、rm、build
 
 1.2 安装以下软件，安装完软件后强烈推荐配置 docker 镜像加速和 yum 源，这样构建过程会更顺畅。
 
@@ -72,7 +72,7 @@ git clone -b main https://github.com/shiwei-Ren/auto-deploy.git
 ```
 #------ 构建 docker-compose.yml 需填的信息-------------
 # 项目名，这是必填项
-PROJECT_NAME=my_project_name
+PROJECT_NAME=marchsoft
 
 # 设置构建容器的数量, 值为非负数, 如果不构建填：0
 mysql=1
@@ -85,7 +85,7 @@ portainer=0
 #----------------------------------------------------
 ```
 
-`my_project_name` 指明了我们构建方案的名称。构建方案文件夹名称、容器名称、主机名称等都与此相关。以上配置信息生成的容器构建方案会生成在 `./target/my_project_name` 下，启动该构建方案会启动一个mysql容器、一个nginx容器和两个后端api容器。
+`marchsoft` 指明了我们构建方案的名称。构建方案文件夹名称、容器名称、主机名称等都与此相关。以上配置信息生成的容器构建方案会生成在 `./target/marchsoft` 下，启动该构建方案会启动一个mysql容器、一个nginx容器和两个后端api容器。
 
 为了方便介绍我们用了一些 “专用词”，了解它们能够解决你脑海中的一点疑惑。
 
@@ -93,7 +93,7 @@ portainer=0
 * 构建方案、构建的项目：它们是 `target` 目录下生成的一个目录，这个目录中包含了构建容器所需的配置文件和shell脚本，以项目名 `PROJECT_NAME` 命名
 * 服务、容器配置：指一个启动一个容器的yml配置，在 `docker-compose` 中把一个容器看做一个服务（service）
 * 构建脚本：指项目路径下的 `build.sh` 脚本
-* 项目启动脚本、构建方案启动脚本：指在 `target` 目录下生成的以项目名（`PROJECT_NAME`）命名的文件夹里的 shell 脚本。在使用指南中演示的指 `my_project_name.sh` 脚本
+* 项目启动脚本、构建方案启动脚本：指在 `target` 目录下生成的以项目名（`PROJECT_NAME`）命名的文件夹里的 shell 脚本。在使用指南中演示的指 `compose.sh` 脚本
 
 
 
@@ -112,10 +112,10 @@ sh build.sh
 # 下面是输出和打印内容
 不存在, 创建文件夹
 第 1 个 | 请输入与mysql容器3306映射的端口(默认 3306): 
-my_project_name_mysql_1 配置文件已生成 OK
-my_project_name_nginx_1 配置文件已生成 OK
-my_project_name_api_1 配置文件已生成 OK
-my_project_name_api_2 配置文件已生成 OK
+marchsoft_mysql_1 配置文件已生成 OK
+marchsoft_nginx_1 配置文件已生成 OK
+marchsoft_api_1 配置文件已生成 OK
+marchsoft_api_2 配置文件已生成 OK
 构建脚本(build.sh)执行完成
 ```
 
@@ -125,7 +125,7 @@ my_project_name_api_2 配置文件已生成 OK
 cd target
 ls
 # 以下是ls打印内容
-my_project_name #按照 2.2 配置生成的方案文件夹名称
+marchsoft #按照 2.2 配置生成的方案文件夹名称
 ```
 
 
@@ -135,26 +135,26 @@ my_project_name #按照 2.2 配置生成的方案文件夹名称
 2.4.1 前往并查看方案内容
 
 ```bash
-cd my_project_name
+cd marchsoft
 ll
 # 以下是打印内容
 total 16
 -rw-r--r-- 1 root root 4508 Jan 18 20:50 docker-compose.yml
 -rw-r--r-- 1 root root  790 Jan 18 20:50 Dockerfile-api
--rwxr-xr-x 1 root root 2359 Jan 18 20:50 my_project_name.sh # 启动shell
+-rwxr-xr-x 1 root root 2359 Jan 18 20:50 marchsoft.sh # 启动shell
 drwxr-xr-x 3 root root   38 Jan 18 20:50 nginx
 ```
 
 2.4.2 运行构建启动命令
 
 ```bash
-cd my_project_name
+cd marchsoft
 # 启动方式
-sh my_project_name.sh # 通过sh命令启动
-./my_project_name.sh # 直接运行脚本
+sh compose.sh # 通过sh命令启动
+./compose.sh # 直接运行脚本
 ```
 
-如果是第一次构建方案，以下是会发生的：
+如果是第一次构建方案，以下是会发生的（新生略）：
 
 * 若未安装 `docker-compose` 则进行安装
 * 创建容器公共网桥（network）
@@ -163,13 +163,13 @@ sh my_project_name.sh # 通过sh命令启动
 启动项目，启动打印日志如下：
 
 ```bash
-./my_project_name.sh 
+./compose.sh 
 # 以下是打印内容
-Creating my_project_name_api_1   ... done
-Creating my_project_name_mysql_1 ... done
-Creating my_project_name_api_2   ... done
-Creating my_project_name_nginx_1 ... done
-my_project_name.sh 启动脚本执行完成
+Creating marchsoft_api_1   ... done
+Creating marchsoft_mysql_1 ... done
+Creating marchsoft_api_2   ... done
+Creating marchsoft_nginx_1 ... done
+marchsoft.sh 启动脚本执行完成
 ```
 
 2.5 查看启动的容器
@@ -183,10 +183,10 @@ docker ps -a
 # 打印信息如下
          Name                        Command               State                           Ports                         
 -------------------------------------------------------------------------------------------------------------------------
-my_project_name_api_1     /bin/bash                        Up                         
-my_project_name_api_2     /bin/bash                        Up                         
-my_project_name_mysql_1   docker-entrypoint.sh --cha ...   Up      0.0.0.0:3306->3306/tcp, 33060/tcp                     
-my_project_name_nginx_1   /docker-entrypoint.sh ngin ...   Up      0.0.0.0:443->443/tcp, 0.0.0.0:80->80/tcp,             
+marchsoft_api_1     /bin/bash                        Up                         
+marchsoft_api_2     /bin/bash                        Up                         
+marchsoft_mysql_1   docker-entrypoint.sh --cha ...   Up      0.0.0.0:3306->3306/tcp, 33060/tcp                     
+marchsoft_nginx_1   /docker-entrypoint.sh ngin ...   Up      0.0.0.0:443->443/tcp, 0.0.0.0:80->80/tcp,             
                                                                    0.0.0.0:8000->8000/tcp, 0.0.0.0:8001->8001/tcp,   
 ```
 
@@ -210,6 +210,20 @@ vi docker-compose.yml
 .env 环境变量部分内容
 
 ```
+# 全局部署路径
+GLOBAL_PATH=/root
+
+# mysql默认密码
+MYSQL_ROOT_PASSWORD=123456
+
+# redis 默认密码
+REDIS_DEFAULT_PASS=123456
+
+# rabbitmq 默认虚拟机和用户账号
+RABBITMQ_DEFAULT_VHOST=/
+RABBITMQ_DEFAULT_USER=root
+RABBITMQ_DEFAULT_PASS=123456
+
 # 容器镜像版本
 MYSQL_IMAGE=mysql:8.0.22
 REDIS_IMAGE=redis:6.0.10
@@ -217,20 +231,6 @@ RABBITMQ_IMAGE=rabbitmq:management
 NGINX_IMAGE=nginx:1.18.0
 # docker可视化工具
 PORTAINER_IMAGE=portainer/portainer
-
-# 部署路径
-GLOBAL_PATH=/root
-
-# rabbitmq 默认虚拟机和用户账号
-RABBITMQ_DEFAULT_VHOST=/
-RABBITMQ_DEFAULT_USER=root
-RABBITMQ_DEFAULT_PASS=123456
-
-# redis 默认密码
-REDIS_DEFAULT_PASS=123456
-
-# mysql默认密码
-MYSQL_ROOT_PASSWORD=123456
 ```
 
 
@@ -239,9 +239,9 @@ docker-compose.yml 配置文件部分内容
 
 ```
   # 后端 api 项目容器（推荐以项目名命名）------------------------------------
-  my_project_name_api_1:
-    container_name: my_project_name_api_1
-    hostname: my_project_name_api_1
+  marchsoft_api_1:
+    container_name: marchsoft_api_1
+    hostname: marchsoft_api_1
     # 部署启动策略
     deploy:
       restart_policy:
