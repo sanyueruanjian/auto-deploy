@@ -33,7 +33,7 @@ COMMON_DIR="$CURRENT_DIR/../../common"
 #fi
 
 # 以下是每个mysql容器配置文件都会进行的操作
-read -p "第 $ID 个 | 请输入与mysql容器3306映射的端口(默认 3306): " port
+read -p "第 $ID 个 | 请输入与mysql容器 3306 映射的端口(默认 3306): " port
 
 sed -e "s/REPLACE_NAME/${PROJECT_NAME}_mysql_${ID}/g" \
     -e "s/REPLACE_CONTAINER_PATH/${PROJECT_NAME}_mysql_${ID}/g" \
