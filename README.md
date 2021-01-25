@@ -154,12 +154,6 @@ sh compose.sh # 通过sh命令启动
 ./compose.sh # 直接运行脚本
 ```
 
-如果是第一次构建方案，以下是会发生的（新生略）：
-
-* 若未安装 `docker-compose` 则进行安装
-* 创建容器公共网桥（network）
-* 通过 `Dockerfile` 构建 docker 镜像，docker 拉取远程仓库的镜像
-
 启动项目，启动打印日志如下：
 
 ```bash
@@ -172,13 +166,48 @@ Creating marchsoft_nginx_1 ... done
 marchsoft.sh 启动脚本执行完成
 ```
 
+如果是第一次构建方案，以下是会发生的（新手略）：
+
+* 若未安装 `docker-compose` 则进行安装
+* 创建容器公共网桥（network）
+* 通过 `Dockerfile` 构建 docker 镜像，docker 拉取远程仓库的镜像
+
+
+2.4.3 运行 `compose.sh` 脚本使用命令
+
+```
+usage: 这些命令这能在这个目录使用，启动时自动读取当前目录下的配置文件和环境变量。格式如下：
+  1) ./compose.sh <command> [options]
+  2) sh compose.sh <command> [options]
+commands:
+  env                   显示当前环境变量，该命令等价于 cat .env，若编辑修改使用 vi/vim
+  up [-d] [<服务名>..]   启动项目，后台运行加 -d 参数（这是默认执行此脚本的参数）
+  ps [<服务名>..]        显示容器运行情况，同 docker ps 命令
+  start [<服务名>..]     启动服务，exit -> up
+  restart [<服务名>..]   重启服务容器
+  stop [<服务名>..]      停止服务，up -> exit
+  exec <服务名> bash     进入服务容器，以 bash 交互
+  config                验证并输出完整 docker-compose.yml 配置
+  run [<服务名>..]       运行一个服务（容器），通常我们使用 up 命令启动
+  rm [<服务名>..]        移除停止的容器，删除容器
+  logs [<服务名>..]      显示服务日志
+  top [<服务名>..]       查看容器状态，内容：UID、PID、PPID、C、STIME、TTY、TIME、CMD
+  images                列出所有服务使用的镜像（进本方案）
+  help                  显示 compose.sh 帮助
+  --help                显示 docker-compose 帮助
+说明：'[]'选项代表可选参数，不加默认对所有服务生效；在方案中 服务名=容器名=容器内主机名（hostname），都代指一个容器
+```
+
 2.5 查看启动的容器
 
 ```bash
 # 1.使用docker命令
 docker ps -a
 
-# 2.使用docker-compose命令，注意此命令只能在构建方案文件夹下执行
+# 2.使用 compose.sh 命令, 同3
+./compose.sh ps
+
+# 3.使用docker-compose命令，注意此命令只能在构建方案文件夹下执行
  docker-compose ps
 # 打印信息如下
          Name                        Command               State                           Ports                         
