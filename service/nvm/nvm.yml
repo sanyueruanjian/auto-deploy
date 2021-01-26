@@ -6,10 +6,7 @@
       restart_policy:
         condition: on-failure
         max_attempts: 3
-    image: centos_git_nvm:2.0
-    build: 
-      context: .
-      dockerfile: Dockerfile-nvm
+    image: "${NVM_IMAGE}"
     networks:
       - marchsoft_biz_net
     volumes:
