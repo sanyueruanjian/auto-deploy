@@ -6,7 +6,7 @@
       restart_policy:
         condition: on-failure
         max_attempts: 3
-    image: centos7_git_nvm:2.0
+    image: centos_git_nvm:2.0
     build: 
       context: .
       dockerfile: Dockerfile-nvm
@@ -14,4 +14,5 @@
       - marchsoft_biz_net
     volumes:
       - "${GLOBAL_PATH}/project:/project"
+    command: "/bin/bash"
     tty: true

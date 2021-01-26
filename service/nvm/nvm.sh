@@ -31,6 +31,10 @@ COMMON_DIR="$CURRENT_DIR/../../common"
 # 第一个容器进行的操作（一般是拷贝 Dockerfile）
 if [ $ID -eq 1 ]; then
     cp -rf $CURRENT_DIR/Dockerfile-nvm $PROJECT_DIR/
+    if [ ! -e "$PROJECT_DIR/nvm" ]; then
+        mkdir -p "$PROJECT_DIR/nvm"
+        cp -rf $CURRENT_DIR/material/* "$PROJECT_DIR/nvm"
+    fi
 fi
 
 # 以下是每一个容器都会进行的操作

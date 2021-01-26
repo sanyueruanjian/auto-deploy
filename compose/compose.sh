@@ -117,7 +117,6 @@ prepare
 # 根据参数的情况调用执行 docker-compose 命令
 if [ $# -eq 0 ]; then
     docker-compose up -d
-    echo "所有容器启动完成，done 表示启动成功"  
 elif [ $1 = "help" ]; then
     print_help
 elif [ $1 = "env" ]; then
