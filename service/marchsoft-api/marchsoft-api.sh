@@ -29,9 +29,9 @@ COMMON_DIR="$CURRENT_DIR/../../common"
 # 公共子脚本环境变量 end------------------------------------------------
 
 # 第一个容器进行的操作（一般是拷贝 Dockerfile）
-if [ $ID -eq 1 ]; then
-    cp -rf $CURRENT_DIR/Dockerfile-api $PROJECT_DIR
-fi
+#if [ $ID -eq 1 ]; then
+    #cp -rf $CURRENT_DIR/Dockerfile-api $PROJECT_DIR
+#fi
 
 # 以下是每个api都会进行的操作
 sed -e "s/REPLACE_NAME/${PROJECT_NAME}_api_${ID}/g" \

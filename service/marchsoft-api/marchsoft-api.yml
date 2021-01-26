@@ -6,10 +6,7 @@
       restart_policy:
         condition: on-failure
         max_attempts: 3
-    image: centos7_mvn_git_java8:2.0
-    build: 
-      context: .
-      dockerfile: Dockerfile-api
+    image: "${JAVA_API_MAVEN_IMAGE}"
     networks:
       - marchsoft_biz_net
     volumes:
@@ -23,4 +20,5 @@
       #- rabbitmq
       #- nginx
     # 没有进程运行，容器启动后会自动停止，使用tty阻塞容器
+    command: "/bin/bash"
     tty: true

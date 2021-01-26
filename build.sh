@@ -1,11 +1,11 @@
 #!/bin/bash
 # 说明：
-# 1) 在使用脚本前需要先装 docker 和 docker-compose，最好配置docker镜像加速和阿里yml
-# 2) 构建的项目在 target 文件夹下以项目名（PROJECT_NAME）命名，构建完成后可以直接运行
+# 1) 在使用脚本前需要先装 docker 并好配置 docker 镜像加速
+# 2) 构建的项目在 target 文件夹下以项目名（PROJECT_NAME）命名，构建完成后可以直接运行启动脚本(./compose.sh ↙)
 # 3) 如果脚本中存在 '\r' 回车符原因不能执行，这里推荐下载 dos2unix 把当前下所有文件格式化为unix格式文件，
 #    下载完软件后在下方取消注释可以对当前目录下的所有文件进行转换，
 
-# ------ 构建 docker-compose.yml 需填的信息-------------
+# ---- 构建 docker-compose.yml 用户需填的信息 -----------
 # 项目名，这是必填项
 PROJECT_NAME=marchsoft
 
