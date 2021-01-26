@@ -3,7 +3,7 @@
     # 容器名
     container_name: REPLACE_NAME
     # 依赖的镜像
-    image: "${MYSQL_IMAGE:-mysql}"
+    image: "${MYSQL_IMAGE}"
     # 主机名
     hostname: REPLACE_NAME
     # 配置启动策略
