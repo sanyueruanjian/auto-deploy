@@ -1,0 +1,44 @@
+  # mysql 容器
+  REPLACE_NAME:
+    # 容器名
+    container_name: REPLACE_NAME
+    # 依赖的镜像
+    image: "${MYSQL_IMAGE}"
+    # 主机名
+    hostname: REPLACE_NAME
+    # 配置启动策略
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+    # 配置容器连接的网络
+    networks:
+      - marchsoft_biz_net
+    # 端口映射
+    ports:
+      - "REPLACE_PORT:3306"
+    # 数据卷挂载
+    volumes:
+      # 暂时先使用绝对路径，之后考虑是否使用数据卷名称的方式挂载数据卷
+      - "${GLOBAL_PATH}/REPLACE_CONTAINER_PATH/conf.d:/etc/mysql/conf.d"
+      - "${GLOBAL_PATH}/REPLACE_CONTAINER_PATH/logs:/logs"
+      - "${GLOBAL_PATH}/REPLACE_CONTAINER_PATH/data:/var/lib/mysql"
+    # 设置环境变量
+    environment:
+      - "MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}"
+      - "TZ=Asia/Shanghai"
+    # explicit_defaults_for_timestamp=true 参看：https://www.cnblogs.com/zqifa/p/mysql-3.html
+    # lower_case_table_names=1 显示设置mysql大小写不敏感，参看：https://blog.csdn.net/jesseyoung/article/details/40617031
+    # max_allowed_packet=128M 配置mysql接受数据包的最大值，默认1024KB，参看：https://www.cnblogs.com/leexboo/p/10546902.html
+    # default-authentication-plugin=mysql_native_password 配置mysql的默认加密方式，可以使navicat登录
+    # sql-mode 参看：https://www.cnblogs.com/kiko2014551511/p/11527480.html
+    # max_connections设置mysql的最大连接数，默认为100，超出100会报错不能连接
+    command:
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_general_ci
+      --explicit_defaults_for_timestamp=true
+      --lower_case_table_names=1
+      --max_allowed_packet=128M
+      --default-authentication-plugin=mysql_native_password 
+      --sql-mode=NO_AUTO_VALUE_ON_ZERO,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION,PIPES_AS_CONCAT,ANSI_QUOTES
+      --max_connections=3600

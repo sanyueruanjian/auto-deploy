@@ -1,0 +1,15 @@
+  # 前端npm部署容器 ----------------------------------------------------
+  REPLACE_NAME:
+    container_name: REPLACE_NAME
+    hostname: REPLACE_NAME
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+    image: "${NVM_IMAGE}"
+    networks:
+      - marchsoft_biz_net
+    volumes:
+      - "${GLOBAL_PATH}/project:/project"
+    command: "/bin/bash"
+    tty: true

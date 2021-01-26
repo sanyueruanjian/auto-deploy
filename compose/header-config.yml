@@ -1,0 +1,4 @@
+# docker与compose版本对应 参看：https://docs.docker.com/compose/compose-file/compose-file-v3/
+version: "3.3"
+# service 属性开始
+services: 

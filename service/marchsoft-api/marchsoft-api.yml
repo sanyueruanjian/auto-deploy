@@ -1,0 +1,24 @@
+  # 后端 api 项目容器（推荐以项目名命名） ------------------------------------
+  REPLACE_NAME:
+    container_name: REPLACE_NAME
+    hostname: REPLACE_NAME
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+    image: "${JAVA_API_MAVEN_IMAGE}"
+    networks:
+      - marchsoft_biz_net
+    volumes:
+      - "${GLOBAL_PATH}/project:/project"
+    environment:
+      - TZ=Asia/Shanghai
+    # 配置容器的依赖、启动先后
+    #depends_on:
+      #- mysql
+      #- redis
+      #- rabbitmq
+      #- nginx
+    # 没有进程运行，容器启动后会自动停止，使用tty阻塞容器
+    command: "/bin/bash"
+    tty: true
