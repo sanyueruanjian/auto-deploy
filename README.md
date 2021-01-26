@@ -50,10 +50,7 @@
 * Linux基础，熟悉常用命令：cd、ls、cp、cat、mv、vi/vim、sh、yum、rm
 * docker基础，熟悉docker常用命令：run、exec、ps、rm、build
 
-1.2 安装以下软件，安装完软件后强烈推荐配置 docker 镜像加速和 yum 源，这样构建过程会更顺畅。
-
-* docker
-* yum
+1.2 安装 docker，安装完后强烈推荐配置 docker 镜像加速，这样构建过程会更顺畅。
 
 
 
@@ -141,7 +138,7 @@ ll
 total 16
 -rw-r--r-- 1 root root 4508 Jan 18 20:50 docker-compose.yml
 -rw-r--r-- 1 root root  790 Jan 18 20:50 Dockerfile-api
--rwxr-xr-x 1 root root 2359 Jan 18 20:50 marchsoft.sh # 启动shell
+-rwxr-xr-x 1 root root 2359 Jan 18 20:50 compose.sh # 启动shell
 drwxr-xr-x 3 root root   38 Jan 18 20:50 nginx
 ```
 
@@ -216,7 +213,7 @@ marchsoft_api_1     /bin/bash                        Up
 marchsoft_api_2     /bin/bash                        Up                         
 marchsoft_mysql_1   docker-entrypoint.sh --cha ...   Up      0.0.0.0:3306->3306/tcp, 33060/tcp                     
 marchsoft_nginx_1   /docker-entrypoint.sh ngin ...   Up      0.0.0.0:443->443/tcp, 0.0.0.0:80->80/tcp,             
-                                                                   0.0.0.0:8000->8000/tcp, 0.0.0.0:8001->8001/tcp,   
+                                                             0.0.0.0:8000->8000/tcp, 0.0.0.0:8001->8001/tcp,   
 ```
 
 容器状态显示为 `UP` 说明启动成功。
