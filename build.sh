@@ -32,12 +32,6 @@ COMMON_DIR="$PWD/COMMON"
 #dos2unix `find . -type f` 2>/dev/null 1>&2 
 
 
-
-if [ "${mysql:-0}" -e 0 ] && [ "${nginx:-0}" -e 0 ] && [ "${nvm:-0}" -e 0 ] && [ "${redis:-0}" -e 0 ] && [ "${marchsoft_api:-0}" -e 0 ] && [ "${rabbitmq:-0}" -e 0 ] && [ "${portainer:-0}" -e 0 ]; then
-    echo "未构建任何容器，自动退出脚本"
-    exit 1
-fi
-
 # 对文件夹进行处理，如果存在将之前的清空
 if [ -e "$PROJECT_DIR" ]; then
     read -p "在'./target'下已存在项目 $PROJECT_NAME，是否清空 [y/n]: " res
