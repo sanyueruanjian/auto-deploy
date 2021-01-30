@@ -37,9 +37,15 @@ if [ $ID -eq 1 ]; then
     cp -rf $CURRENT_DIR/material/* "$PROJECT_DIR/nginx"
 fi
 
+read -p "第 $ID 个 | 请输入与nginx的 80 映射端口(默认: 80): " port1
+read -p "第 $ID 个 | 请再输入与nginx的 443 映射端口(默认: 443): " port2
+read -p "第 $ID 个 | 请再输入与nginx映射的一组(默认: 8001-8008): " port_group
 # 以下是每个nginx都会进行的操作
 sed -e "s/REPLACE_NAME/${PROJECT_NAME}_nginx_${ID}/g" \
     -e "s/REPLACE_CONTAINER_PATH/${PROJECT_NAME}_nginx_${ID}/g" \
+    -e "s/REPLACE_PORT1/${port1:-80}/g" \
+    -e "s/REPLACE_PORT2/${port2:-443}/g" \
+    -e "s/REPLACE_PORT_GROUP/${port_group:-8001-8008}/g" \
     $CURRENT_DIR/nginx.yml >> $PROJECT_DIR/docker-compose.yml
 
 echo "${PROJECT_NAME}_nginx_${ID} 配置文件已生成 OK"
