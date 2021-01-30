@@ -32,10 +32,16 @@ COMMON_DIR="$PWD/COMMON"
 #dos2unix `find . -type f` 2>/dev/null 1>&2 
 
 
+
+if [ "${mysql:-0}" -e 0 ] && [ "${nginx:-0}" -e 0 ] && [ "${nvm:-0}" -e 0 ] && [ "${redis:-0}" -e 0 ] && [ "${marchsoft_api:-0}" -e 0 ] && [ "${rabbitmq:-0}" -e 0 ] && [ "${portainer:-0}" -e 0 ]; then
+    echo "未构建任何容器，自动退出脚本"
+    exit 1
+fi
+
 # 对文件夹进行处理，如果存在将之前的清空
 if [ -e "$PROJECT_DIR" ]; then
     read -p "在'./target'下已存在项目 $PROJECT_NAME，是否清空 [y/n]: " res
-    if [ $res = "y" ]; then
+    if [ "${res:-n}" = "y" ]; then
         rm -rf $PROJECT_DIR/*
         echo "已清空项目 $PROJECT_NAME(.target/$PROJECT_NAME) 重新生成"
         # 拷贝生成文件
@@ -55,6 +61,21 @@ else
     # 添加执行权限
     chmod +x $PROJECT_DIR/compose.sh
 fi
+
+
+# 打印系统已经使用的端口
+if [ `which ss 2>/dev/null` ]; then
+    echo "本机正在使用的端口号，请勿重复使用！"
+    echo "-------------------------------------------------"
+    ss -lntup -lntu|awk 'NR>1 {print $5}'|grep -Eo '[0-9]*$'|sort -gu|xargs -n 5|column -t
+    echo "-------------------------------------------------"
+elif [ `which netstat 2>/dev/null` ]; then
+    echo "本机正在使用的端口号，请勿重复使用！"
+    echo "-------------------------------------------------"
+    netstat -lntup -lntu|awk 'NR>1 {print $4}'|grep -Eo '[0-9]*$'|sort -gu|xargs -n 5|column -t  
+    echo "-------------------------------------------------"
+fi
+
 #---------------------------------------------------------------------------------------
 
 # 修改启动项目shell脚本里的项目名
@@ -114,4 +135,3 @@ for ((i=1; i<=$portainer; i++)){
 cat $PWD/compose/footer-config.yml >> $PROJECT_DIR/docker-compose.yml
 
 echo "构建脚本 (build.sh) 执行完成"
-
