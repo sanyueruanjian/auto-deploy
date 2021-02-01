@@ -54,11 +54,12 @@ prepare(){
 
             if [ ! -e "$GLOBAL_PATH/${PROJECT_NAME}_nginx_${i}/conf.d" ]; then
                 mkdir -p "$GLOBAL_PATH/${PROJECT_NAME}_nginx_${i}/conf.d"
+                cp -rf $PWD/nginx/conf.d/* "$GLOBAL_PATH/${PROJECT_NAME}_nginx_${i}/conf.d"
             fi
         fi
         # 总是拷贝 ./nginx/conf.d 目录下的所有配置文件到 nginx 容器启动目录的 conf.d
-        cat $PWD/nginx/nginx.conf > "$GLOBAL_PATH/${PROJECT_NAME}_nginx_${i}/nginx.conf" 
-        cp -rf $PWD/nginx/conf.d/* "$GLOBAL_PATH/${PROJECT_NAME}_nginx_${i}/conf.d"
+        #cat $PWD/nginx/nginx.conf > "$GLOBAL_PATH/${PROJECT_NAME}_nginx_${i}/nginx.conf" 
+        #cp -rf $PWD/nginx/conf.d/* "$GLOBAL_PATH/${PROJECT_NAME}_nginx_${i}/conf.d"
     }
 
     # nvm 容器配置
@@ -69,9 +70,8 @@ prepare(){
     for ((i=1; i<=$redis; i++)){
         if [ ! -e "$GLOBAL_PATH/${PROJECT_NAME}_redis_${i}" ]; then
             mkdir -p "$GLOBAL_PATH/${PROJECT_NAME}_redis_${i}"
-        fi
-        # 总是拷贝覆盖
-        cp -rf $PWD/redis/* "$GLOBAL_PATH/${PROJECT_NAME}_redis_${i}"
+            cp -rf $PWD/redis/* "$GLOBAL_PATH/${PROJECT_NAME}_redis_${i}"
+        fi  
     }
 
     # 后端api 容器配置
