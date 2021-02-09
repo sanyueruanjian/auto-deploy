@@ -10,14 +10,45 @@
 PROJECT_NAME=marchsoft
 
 # 设置构建容器的数量, 值为非负数, 如果不构建填：0
-mysql=0
-nginx=0
-nvm=0
-redis=0
-marchsoft_api=0
+mysql=1
+nginx=1
+nvm=1
+redis=1
+marchsoft_api=1
 rabbitmq=0
-portainer=0
+portainer=0;
+# -m:mysql -n:nginx -v：nvm -r：redis -i:marchsoft_api -b:rabbitmq -p:portainer -h:帮助文档
+while getopts 'm:n:v:r:i:b:p:h' OPT; do
+    if [[ $OPTARG =~ ^[0-9]+$ ]]; then 
+        case $OPT in
+            m) mysql=$OPTARG;;
+            n) nginx=$OPTARG;;
+            v) nvm=$OPTARG;;
+            i) marchsoft_api=$OPTARG;;
+            r) redis=$OPTARG;;
+            b) rabbitmq=$OPTARG;;
+            p) portainer=$OPTARG;;
+            h) help;;
+            ?) help;;
+        esac
+    else
+        echo "=====参数错误====="
+    fi    
+done
 
+#使用说明，用来提示输入参数X
+help() {
+  echo "
+    # 表示容器的参数:参数对应容器 容器说明[容器默认数量]
+    -m:mysql 数据库容器[1] 
+    -n:nginx 代理容器[1] 
+    -v:nvm 前端容器[1] 
+    -i:marchsoft_api 后端容器[1] 
+    -b:rabbitmq 消息中间件容器[1] 
+    -p:portainer 容器可视化容器[0] 
+    -h:命令文档"
+  exit 1
+}
 
 # ----- 操作前准备工作，格式转换、软件安装、创建目录... 以下用户无需更改 -----------------------------------------------------------------------------
 
@@ -137,3 +168,15 @@ for ((i=1; i<=$portainer; i++)){
 cat $PWD/compose/footer-config.yml >> $PROJECT_DIR/docker-compose.yml
 
 echo "构建脚本 (build.sh) 执行完成"
+
+# 开始构建容器并启动
+bash $PROJECT_DIR/compose.sh
+
+# 获取项目放置目录
+GLOBAL_PATH=awk -F "=" '/GLOBAL_PATH/{print $2}' compose/docker-compose.env
+chmod +x ./common/server-script/obtain_project.sh
+# 将项目拉取脚本复制到项目放置目录
+cp ./common/server-script/obtain_project.sh $GLOBAL_PATH/project
+
+echo "环境搭建完成"
+
