@@ -178,7 +178,7 @@ cat $PWD/compose/footer-config.yml >> $PROJECT_DIR/docker-compose.yml
 echo "构建脚本 (build.sh) 执行完成"
 
 # 开始构建容器并启动
-cd ./compose
+cd ./target/$PROJECT_NAME
 bash compose.sh
 
 # 获取项目放置目录
