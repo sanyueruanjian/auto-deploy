@@ -12,7 +12,7 @@ if [ ! -d "/etc/docker" ];then
 	`mkdir -d /etc/docker`
   	`touch /etc/docker/daemon.json`
 fi
-echo -e "{\n\t\"registry-mirrors\": [\"https://hv76hnc6.mirror.aliyuncs.com\"]\n}" > /etc/docker/daemon.json
+echo -e "{\n\t\"registry-mirrors\": [\"https://6prwwss1.mirror.aliyuncs.com\"]\n}" > /etc/docker/daemon.json
 systemctl start docker
 
 # git安装
