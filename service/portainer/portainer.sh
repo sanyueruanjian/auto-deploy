@@ -33,7 +33,7 @@ COMMON_DIR="$CURRENT_DIR/../../common"
 #fi
 
 # 以下是每个nginx都会进行的操作
-read -p "第 $ID 个 | 请输入与portainer容器 9000 映射的端口: " port
+port=$5
 
 sed -e "s/REPLACE_NAME/${PROJECT_NAME}_portainer_${ID}/g" \
     -e "s/REPLACE_CONTAINER_PATH/${PROJECT_NAME}_portainer_${ID}/g" \

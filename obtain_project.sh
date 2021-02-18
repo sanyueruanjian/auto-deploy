@@ -1,6 +1,4 @@
 #!/usr/bin/expect
-
-# 拉取项目脚本
 set gitAddress [lindex $argv 0]
 set gitUsername [lindex $argv 1]
 set gitPassword [lindex $argv 2]

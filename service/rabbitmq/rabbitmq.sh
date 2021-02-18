@@ -33,8 +33,8 @@ COMMON_DIR="$CURRENT_DIR/../../common"
 #fi
 
 # 以下是每个容器都会进行的操作， ID表明为第几个容器
-read -p "第 $ID 个 | 请输入与rabbitmq的 5672 映射端口(默认: 5672): " port1 
-read -p "第 $ID 个 | 请再输入与rabbitmq的 15672 映射端口(默认: 15672): " port2
+port1=$5
+port2=$6
 sed -e "s/REPLACE_NAME/${PROJECT_NAME}_rabbitmq_${ID}/g" \
     -e "s/REPLACE_CONTAINER_PATH/${PROJECT_NAME}_rabbitmq_${ID}/g" \
     -e "s/REPLACE_PORT1/${port1:-5672}/g" \

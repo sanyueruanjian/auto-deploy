@@ -38,7 +38,7 @@ fi
 
 # 需要替换redis为配置容器名
 # 以下是每个容器都会进行的操作， ID表明为第几个容器
-read -p "第 $ID 个 | 请输入宿主机与redis容器 6379 端口映射的端口(默认:6379): " port
+port=$5
 
 sed -e "s/REPLACE_NAME/${PROJECT_NAME}_redis_${ID}/g" \
     -e "s/REPLACE_CONTAINER_PATH/${PROJECT_NAME}_redis_${ID}/g" \

@@ -1,8 +1,7 @@
 #!/bin/bash
 
 # docker安装
-docker_ex=`docker --version | wc -l` 
-if [ $docker_ex != 1 ];then
+if [ `docker --version | wc -l` != 1 ];then
 	sudo yum -y update &&\
 	sudo yum install -y yum-utils device-mapper-persistent-data lvm2 &&\
 	sudo yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo &&\
@@ -17,16 +16,8 @@ echo -e "{\n\t\"registry-mirrors\": [\"https://hv76hnc6.mirror.aliyuncs.com\"]\n
 systemctl start docker
 
 # git安装
-git_ex=`git --version | wc -l`
-if [ $git_ex != '1' ];then
-	sudo yum install git -y
-fi
+
+if [ `git --version | wc -l` != '1' ];then sudo yum install git -y;fi
 
 # expect安装 expect用于提供脚本和控制台交互功能
-expect_ex=`yum list installed | grep expect | wc -l`
-if [ $expect_ex != '1' ];then
-	sudo yum install expect -y
-fi
-
-
-
+if [ `yum list installed | grep expect | wc -l` != '1' ];then sudo yum install expect -y;fi

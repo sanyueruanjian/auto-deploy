@@ -7,33 +7,36 @@
 
 # ---- 构建 docker-compose.yml 用户需填的信息 -----------
 # 项目名，这是必填项
-PROJECT_NAME=marchsoft
+PROJECT_NAME=awk -F "=" '/project_name/{print $2}' config-list.env
 
 # 设置构建容器的数量, 值为非负数, 如果不构建填：0
-mysql=1
-nginx=1
-nvm=1
-redis=1
-marchsoft_api=1
-rabbitmq=0
-portainer=0;
+mysql=`awk -F "=" '/mysql_count/{print $2}' config-list.env`
+nginx=`awk -F "=" '/nginx_count/{print $2}' config-list.env`
+nvm=`awk -F "=" '/nvm_count/{print $2}' config-list.env`
+redis=`awk -F "=" '/redis_count/{print $2}' config-list.env`
+marchsoft_api=`awk -F "=" '/marchsoft_api_count/{print $2}' config-list.env`
+rabbitmq=`awk -F "=" '/rabbitmq_count/{print $2}' config-list.env`
+portainer=`awk -F "=" '/portainer_count/{print $2}' config-list.env`;
+
 # -m:mysql -n:nginx -v：nvm -r：redis -i:marchsoft_api -b:rabbitmq -p:portainer -h:帮助文档
 while getopts 'm:n:v:r:i:b:p:h' OPT; do
-    if [[ $OPTARG =~ ^[0-9]+$ ]]; then 
-        case $OPT in
-            m) mysql=$OPTARG;;
-            n) nginx=$OPTARG;;
-            v) nvm=$OPTARG;;
-            i) marchsoft_api=$OPTARG;;
-            r) redis=$OPTARG;;
-            b) rabbitmq=$OPTARG;;
-            p) portainer=$OPTARG;;
-            h) help;;
-            ?) help;;
-        esac
-    else
+    if [[ $OPT != "h" ]] && [[ ! $OPTARG =~ ^[0-9]+$ ]]; then 
         echo "=====参数错误====="
-    fi    
+        exit 1;
+    fi   
+    case $OPT in
+        m) mysql=$OPTARG;;
+        n) nginx=$OPTARG;;
+        v) nvm=$OPTARG;;
+        i) marchsoft_api=$OPTARG;;
+        r) redis=$OPTARG;;
+        b) rabbitmq=$OPTARG;;
+        p) portainer=$OPTARG;;
+        h) help
+            exit 1;;
+        ?) help
+            exit 1;;
+    esac 
 done
 
 #使用说明，用来提示输入参数X
@@ -132,12 +135,14 @@ cat $PWD/compose/header-config.yml > $PROJECT_DIR/docker-compose.yml
 
 # 生成 mysql 容器配置
 for ((i=1; i<=$mysql; i++)){
-    sh $SERVICE_DIR/mysql/mysql.sh $i $SERVICE_DIR/mysql $PROJECT_NAME $PROJECT_DIR
+    local port=`awk -F "=" '/mysql$i_port/{print $2}' config-list.env`
+    sh $SERVICE_DIR/mysql/mysql.sh $i $SERVICE_DIR/mysql $PROJECT_NAME $PROJECT_DIR $port 
 }
 
 # 生成 nginx 部分配置
 for ((i=1; i<=$nginx; i++)){
-    sh $SERVICE_DIR/nginx/nginx.sh $i $SERVICE_DIR/nginx $PROJECT_NAME $PROJECT_DIR
+    local port=`awk -F "=" '/nginx$i_port/{print $2}' config-list.env`
+    sh $SERVICE_DIR/nginx/nginx.sh $i $SERVICE_DIR/nginx $PROJECT_NAME $PROJECT_DIR $port
 }
 
 # 生成 nvm 部分配置
@@ -147,7 +152,8 @@ for ((i=1; i<=$nvm; i++)) {
 
 # 生成 redis 容器配置
 for ((i=1; i<=$redis; i++)){
-    sh $SERVICE_DIR/redis/redis.sh $i $SERVICE_DIR/redis $PROJECT_NAME $PROJECT_DIR
+    local port=`awk -F "=" '/redis$i_port/{print $2}' config-list.env`
+    sh $SERVICE_DIR/redis/redis.sh $i $SERVICE_DIR/redis $PROJECT_NAME $PROJECT_DIR $port
 }
 
 # 生成 后端api 容器配置
@@ -157,12 +163,14 @@ for ((i=1; i<=$marchsoft_api; i++)){
 
 # 生成 rabbitmq 容器配置
 for ((i=1; i<=$rabbitmq; i++)){
-    sh $SERVICE_DIR/rabbitmq/rabbitmq.sh $i $SERVICE_DIR/rabbitmq $PROJECT_NAME $PROJECT_DIR
+    local port=`awk -F "=" '/rabbtimq$i_port/{print $2}' config-list.env`
+    sh $SERVICE_DIR/rabbitmq/rabbitmq.sh $i $SERVICE_DIR/rabbitmq $PROJECT_NAME $PROJECT_DIR $port
 }
 
 # 生成 portainer 部分配置
 for ((i=1; i<=$portainer; i++)){
-    sh $SERVICE_DIR/portainer/portainer.sh $i $SERVICE_DIR/portainer $PROJECT_NAME $PROJECT_DIR
+    local port=`awk -F "=" '/portainer$i_port/{print $2}' config-list.env`
+    sh $SERVICE_DIR/portainer/portainer.sh $i $SERVICE_DIR/portainer $PROJECT_NAME $PROJECT_DIR $port
 }
 
 cat $PWD/compose/footer-config.yml >> $PROJECT_DIR/docker-compose.yml
@@ -173,10 +181,11 @@ echo "构建脚本 (build.sh) 执行完成"
 bash $PROJECT_DIR/compose.sh
 
 # 获取项目放置目录
-GLOBAL_PATH=awk -F "=" '/GLOBAL_PATH/{print $2}' compose/docker-compose.env
+GLOBAL_PATH=`awk -F "=" '/deploy_path/{print $2}' config-list.env`
 chmod +x ./common/server-script/obtain_project.sh
 # 将项目拉取脚本复制到项目放置目录
-cp ./common/server-script/obtain_project.sh $GLOBAL_PATH/project
+cp ./obtain_project.sh $GLOBAL_PATH/project
+chmod +x $GLOBAL_PATH/project/obtain_project.sh
 
 echo "环境搭建完成"
 
