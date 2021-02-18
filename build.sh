@@ -7,7 +7,7 @@
 
 # ---- 构建 docker-compose.yml 用户需填的信息 -----------
 # 项目名，这是必填项
-PROJECT_NAME=awk -F "=" '/project_name/{print $2}' config-list.env
+PROJECT_NAME=`awk -F "=" '/project_name/{print $2}' config-list.env`
 
 # 设置构建容器的数量, 值为非负数, 如果不构建填：0
 mysql=`awk -F "=" '/mysql_count/{print $2}' config-list.env`
@@ -178,11 +178,11 @@ cat $PWD/compose/footer-config.yml >> $PROJECT_DIR/docker-compose.yml
 echo "构建脚本 (build.sh) 执行完成"
 
 # 开始构建容器并启动
-bash $PROJECT_DIR/compose.sh
+cd ./compose
+bash compose.sh
 
 # 获取项目放置目录
 GLOBAL_PATH=`awk -F "=" '/deploy_path/{print $2}' config-list.env`
-chmod +x ./common/server-script/obtain_project.sh
 # 将项目拉取脚本复制到项目放置目录
 cp ./obtain_project.sh $GLOBAL_PATH/project
 chmod +x $GLOBAL_PATH/project/obtain_project.sh
