@@ -186,11 +186,10 @@ echo "构建脚本 (build.sh) 执行完成"
 cd ./target/$PROJECT_NAME
 bash compose.sh
 cd ../../
-# 获取项目放置目录
-GLOBAL_PATH=`awk -F "=" '/deploy_path/{print $2}' config-list.env`
+
 # 将项目拉取脚本复制到项目放置目录
-cp ./obtain_project.sh $GLOBAL_PATH/project
-chmod +x $GLOBAL_PATH/project/obtain_project.sh
+cp ./obtain_project.sh $DEPLOY_PATH/$PROJECT_NAME/project
+chmod +x $DEPLOY_PATH/$PROJECT_NAME/project/obtain_project.sh
 
 echo "环境搭建完成"
 

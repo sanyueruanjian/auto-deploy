@@ -17,7 +17,10 @@ portainer=0
 #----------------------------------------------------
 
 #---------- 此脚本环境变量 ----------------------------
-GLOBAL_PATH=`awk -F "=" '/deploy_path/{print $2}' ../../config-list.env`
+PROJECT_NAME=`awk -F "=" '/project_name/{print $2}' ../../config-list.env`
+# 部署项目所需的所有文件放置处（部署文件以及项目文件）
+DEPLOY_PATH=`awk -F "=" '/deploy_path/{print $2}' ../../config-list.env`
+GLOBAL_PATH=$DEPLOY_PATH/$PROJECT_NAME
 #---------------------------------------------------- 
 
 
