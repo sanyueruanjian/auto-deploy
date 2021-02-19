@@ -10,8 +10,7 @@
 PROJECT_NAME=`awk -F "=" '/project_name/{print $2}' config-list.env`
 # 部署项目所需的所有文件放置处（部署文件以及项目文件）
 DEPLOY_PATH=`awk -F "=" '/deploy_path/{print $2}' config-list.env`
-# 项目存放路径
-PROJECT_PATH=${DEPLOY_PATH}/${PROJECT_NAME}
+
 
 # 设置构建容器的数量, 值为非负数, 如果不构建填：0
 mysql=`awk -F "=" '/mysql_count/{print $2}' config-list.env`
@@ -87,7 +86,7 @@ if [ -e "$PROJECT_DIR" ]; then
         echo "已清空项目 $PROJECT_NAME(.target/$PROJECT_NAME) 重新生成"
         # 拷贝生成文件
         cat $PWD/compose/docker-compose.env > $PROJECT_DIR/.env
-        sed -i "s/GLOBAL_PATH=.*/GLOBAL_PATH=${PROJECT_PATH}/g" $PROJECT_DIR/.env
+        sed -i "s/GLOBAL_PATH=.*/GLOBAL_PATH=\\${DEPLOY_PATH}\/${PROJECT_NAME}/g" $PROJECT_DIR/.env
         cat $PWD/compose/compose.sh > $PROJECT_DIR/compose.sh
         # 添加执行权限
         chmod +x $PROJECT_DIR/compose.sh
@@ -99,7 +98,7 @@ else
     mkdir -p $PROJECT_DIR
     # 拷贝生成文件
     cat $PWD/compose/docker-compose.env > $PROJECT_DIR/.env
-    sed -i "s/GLOBAL_PATH=.*/GLOBAL_PATH=${PROJECT_PATH}/g" $PROJECT_DIR/.env
+    sed -i "s/GLOBAL_PATH=.*/GLOBAL_PATH=\\${DEPLOY_PATH}\/${PROJECT_NAME}/g" $PROJECT_DIR/.env
     cat $PWD/compose/compose.sh > $PROJECT_DIR/compose.sh
     # 添加执行权限
     chmod +x $PROJECT_DIR/compose.sh
