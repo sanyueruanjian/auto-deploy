@@ -80,19 +80,14 @@ fi
 
 # 对文件夹进行处理，如果存在将之前的清空
 if [ -e "$PROJECT_DIR" ]; then
-    read -p "在'./target'下已存在项目 $PROJECT_NAME，是否清空 [y/n]: " res
-    if [ "${res:-n}" = "y" ]; then
-        rm -rf $PROJECT_DIR/*
-        echo "已清空项目 $PROJECT_NAME(.target/$PROJECT_NAME) 重新生成"
-        # 拷贝生成文件
-        cat $PWD/compose/docker-compose.env > $PROJECT_DIR/.env
-        sed -i "s/GLOBAL_PATH=.*/GLOBAL_PATH=\\${DEPLOY_PATH}\/${PROJECT_NAME}/g" $PROJECT_DIR/.env
-        cat $PWD/compose/compose.sh > $PROJECT_DIR/compose.sh
-        # 添加执行权限
-        chmod +x $PROJECT_DIR/compose.sh
-    else
-        echo "项目 $PROJECT_NAME 未清除(./target/$PROJECT_NAME)。容器的配置和环境变量未重新生成，运行时请确认一遍！"
-    fi
+    rm -rf $PROJECT_DIR/*
+    echo "已清空项目 $PROJECT_NAME(.target/$PROJECT_NAME) 重新生成"
+    # 拷贝生成文件
+    cat $PWD/compose/docker-compose.env > $PROJECT_DIR/.env
+    sed -i "s/GLOBAL_PATH=.*/GLOBAL_PATH=\\${DEPLOY_PATH}\/${PROJECT_NAME}/g" $PROJECT_DIR/.env
+    cat $PWD/compose/compose.sh > $PROJECT_DIR/compose.sh
+    # 添加执行权限
+    chmod +x $PROJECT_DIR/compose.sh
 else
     echo "初始化项目文件夹"
     mkdir -p $PROJECT_DIR
@@ -190,6 +185,11 @@ cd ../../
 # 将项目拉取脚本复制到项目放置目录
 cp ./obtain_project.sh $DEPLOY_PATH/$PROJECT_NAME/project
 chmod +x $DEPLOY_PATH/$PROJECT_NAME/project/obtain_project.sh
+
+# 生成docker证书
+cd ./certs
+chmod +x docker-cert-create.sh
+bash docker-cert-create.sh
 
 echo "环境搭建完成"
 
