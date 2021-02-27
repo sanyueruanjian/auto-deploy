@@ -40,11 +40,11 @@ openssl req -new -x509 -days 365 -key "ca-key.pem" -sha256 -out "ca.pem" -passin
 # 生成服务器端的私钥
 openssl genrsa -out "server-key.pem" 4096
 # 生成服务器端的证书请求
-openssl req -subj "/CN=$COMMON_NAME" -sha256 -new -key "server-key.pem" -out server.csr -subj "/C=$COUNTRY/ST=$STATE/L=$CITY/O=$ORGANIZATION/OU=$ORGANIZATIONAL_UNIT/emailAddress=$EMAIL"
+openssl req -subj "/CN=$COMMON_NAME" -sha256 -new -key "server-key.pem" -out server.csr
 
 # 规定哪些IP或者DNS可以通过证书访问
 # IP:$IP,DNS:XXXX
-echo "subjectAltName = IP:0.0.0.0,IP:$IP,IP:127.0.0.1" >> extfile.cnf
+echo "subjectAltName = IP:0.0.0.0,IP:$IP,IP:127.0.0.1" > extfile.cnf
 echo "extendedKeyUsage = serverAuth" >> extfile.cnf
 # 使用自定义CA证书签发服务器端的证书请求，生成服务器端证书
 # -days 365证书有效期
@@ -56,7 +56,7 @@ rm -f extfile.cnf
 # 生成客户端的私钥
 openssl genrsa -out "key.pem" 4096
 # 生成客户端的证书请求
-openssl req -subj '/CN=client' -new -key "client-key.pem" -out client.csr
+openssl req -subj '/CN=client' -new -key "key.pem" -out client.csr
 echo "extendedKeyUsage = clientAuth" >> extfile.cnf
 # 使用自定义CA证书签发客户端的证书请求，生成客户端证书
 # -days 365证书有效期
