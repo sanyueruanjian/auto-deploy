@@ -80,7 +80,7 @@ rm -rf "tls-client-certs"
 mkdir -p /etc/docker/certs.d
 cp -f "ca.pem" "server-cert.pem" "server-key.pem" /etc/docker/certs.d/
 
-sed -i "s/Execstart=\/usr\/bin\/dockerd.*/Execstart=\/usr\/bin\/dockerd -D --tlsverify=true --tlscert=\/etc\/docker\/certs.d\/server-cert.pem --tlskey=\/etc\/docker\/certs.d\/server-key.pem --tlscacert=\/etc\/docker\/certs.d\/ca.pem -H tcp://0.0.0.0:2375 -H unix://var/run/docker.sock/g"
+sed -i "s/Execstart=\/usr\/bin\/dockerd.*/Execstart=\/usr\/bin\/dockerd -D --tlsverify=true --tlscert=\/etc\/docker\/certs.d\/server-cert.pem --tlskey=\/etc\/docker\/certs.d\/server-key.pem --tlscacert=\/etc\/docker\/certs.d\/ca.pem -H tcp://0.0.0.0:2375 -H unix://var/run/docker.sock/g" /lib/systemd/system/docker.service
 
 sudo systemctl daemon-reload
 sudo service docker restart
