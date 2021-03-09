@@ -4,7 +4,6 @@ networks:
     ipam:
       config:
         - subnet: 172.22.0.0/16
-    external: true
 
 # api: 172.22.1.0 ~ 172.22.1.255
 # nvm: 172.22.2.0 ~ 172.22.2.255
