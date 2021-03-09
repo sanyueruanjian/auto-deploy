@@ -1,4 +1,15 @@
 # 公共业务网桥：marchsoft_biz_net
 networks:
   marchsoft_biz_net:
+    ipam:
+      config:
+        - subnet: 172.22.0.0/16
     external: true
+
+# api: 172.22.1.0 ~ 172.22.1.255
+# nvm: 172.22.2.0 ~ 172.22.2.255
+# mysql: 172.22.3.0 ~ 172.22.3.255
+# redis: 172.22.4.0 ~ 172.22.4.255
+# nginx: 172.22.5.0 ~ 172.22.5.255
+# rabbitmq: 172.22.6.0 ~ 172.22.6.255
+# portainer: 172.22.7.0 ~ 172.22.7.255

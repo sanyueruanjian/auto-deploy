@@ -6,9 +6,9 @@
 
 # 以下是配置信息
 # --[BEGIN]------------------------------
-
+server_ip=`awk -F "=" '/server_ip/{print $2}' ../config-list.env`
 # docker服务器ip
-IP=`curl icanhazip.com`
+IP=`curl $server_ip/api/system/ip`
 # 证书密码
 PASSWORD="qaz4399"
 # 国家
@@ -80,7 +80,7 @@ rm -rf "tls-client-certs"
 mkdir -p /etc/docker/certs.d
 cp -f "ca.pem" "server-cert.pem" "server-key.pem" /etc/docker/certs.d/
 
-sed -i "s/Execstart=\/usr\/bin\/dockerd.*/Execstart=\/usr\/bin\/dockerd -D --tlsverify=true --tlscert=\/etc\/docker\/certs.d\/server-cert.pem --tlskey=\/etc\/docker\/certs.d\/server-key.pem --tlscacert=\/etc\/docker\/certs.d\/ca.pem -H tcp://0.0.0.0:2375 -H unix://var/run/docker.sock/g" /lib/systemd/system/docker.service
+sed -i "s/ExecStart=\/usr\/bin\/dockerd.*/ExecStart=\/usr\/bin\/dockerd -D --tlsverify=true --tlscert=\/etc\/docker\/certs.d\/server-cert.pem --tlskey=\/etc\/docker\/certs.d\/server-key.pem --tlscacert=\/etc\/docker\/certs.d\/ca.pem -H tcp:\/\/0.0.0.0:2375 -H unix:\/\/var\/run\/docker.sock/g" /lib/systemd/system/docker.service
 
 sudo systemctl daemon-reload
 sudo service docker restart

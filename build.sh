@@ -177,6 +177,12 @@ cat $PWD/compose/footer-config.yml >> $PROJECT_DIR/docker-compose.yml
 
 echo "构建脚本 (build.sh) 执行完成"
 
+# 生成docker证书
+cd ./certs
+chmod +x docker-cert-create.sh
+bash docker-cert-create.sh
+cd ../
+
 # 开始构建容器并启动
 cd ./target/$PROJECT_NAME
 bash compose.sh
@@ -185,11 +191,6 @@ cd ../../
 # 将项目拉取脚本复制到项目放置目录
 cp ./obtain_project.sh $DEPLOY_PATH/$PROJECT_NAME/project
 chmod +x $DEPLOY_PATH/$PROJECT_NAME/project/obtain_project.sh
-
-# 生成docker证书
-cd ./certs
-chmod +x docker-cert-create.sh
-bash docker-cert-create.sh
 
 echo "环境搭建完成"
 

@@ -31,9 +31,10 @@ COMMON_DIR="$CURRENT_DIR/../../common"
 # 第一个容器进行的操作（一般是拷贝 Dockerfile）
 #if [ $ID -eq 1 ]; then
 #fi
-
+IP=172.22.2.
 # 以下是每一个容器都会进行的操作
 sed -e "s/REPLACE_NAME/${PROJECT_NAME}_nvm_${ID}/g" \
+	-e "s/REPLACE_IP/${IP}${ID}/g" \
     $CURRENT_DIR/nvm.yml >> $PROJECT_DIR/docker-compose.yml
 
 echo "${PROJECT_NAME}_nvm_${ID} 配置文件已生成 OK"

@@ -8,7 +8,8 @@
         max_attempts: 3
     image: "${NVM_IMAGE}"
     networks:
-      - marchsoft_biz_net
+      marchsoft_biz_net:
+        ipv4_address: ${REPLACE_IP}
     volumes:
       - "${GLOBAL_PATH}/project:/project"
     command: "/bin/bash"

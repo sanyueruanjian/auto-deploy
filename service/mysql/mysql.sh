@@ -34,10 +34,11 @@ COMMON_DIR="$CURRENT_DIR/../../common"
 
 # 以下是每个mysql容器配置文件都会进行的操作
 port=$5
-
+IP=172.22.3.
 sed -e "s/REPLACE_NAME/${PROJECT_NAME}_mysql_${ID}/g" \
     -e "s/REPLACE_CONTAINER_PATH/${PROJECT_NAME}_mysql_${ID}/g" \
     -e "s/REPLACE_PORT/${port:-3306}/g" \
+    -e "s/REPLACE_IP/${IP}${ID}/g" \
     $CURRENT_DIR/mysql.yml >> $PROJECT_DIR/docker-compose.yml
 
 echo "${PROJECT_NAME}_mysql_${ID} 配置文件已生成 OK"

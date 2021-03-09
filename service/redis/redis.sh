@@ -39,10 +39,11 @@ fi
 # 需要替换redis为配置容器名
 # 以下是每个容器都会进行的操作， ID表明为第几个容器
 port=$5
-
+IP=172.22.4.
 sed -e "s/REPLACE_NAME/${PROJECT_NAME}_redis_${ID}/g" \
     -e "s/REPLACE_CONTAINER_PATH/${PROJECT_NAME}_redis_${ID}/g" \
     -e "s/REPLACE_PORT/${port:-6379}/g" \
+    -e "s/REPLACE_IP/${IP}${ID}/g" \
     $CURRENT_DIR/redis.yml >> $PROJECT_DIR/docker-compose.yml
 
 echo "${PROJECT_NAME}_redis_${ID} 配置文件已生成 OK"

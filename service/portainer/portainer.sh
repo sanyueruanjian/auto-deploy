@@ -34,10 +34,11 @@ COMMON_DIR="$CURRENT_DIR/../../common"
 
 # 以下是每个nginx都会进行的操作
 port=$5
-
+IP=172.22.7.
 sed -e "s/REPLACE_NAME/${PROJECT_NAME}_portainer_${ID}/g" \
     -e "s/REPLACE_CONTAINER_PATH/${PROJECT_NAME}_portainer_${ID}/g" \
     -e "s/REPLACE_PORT/${port:-9000}/g" \
+    -e "s/REPLACE_IP/${IP}${ID}/g" \
     $CURRENT_DIR/portainer.yml >> $PROJECT_DIR/docker-compose.yml
 
 echo "${PROJECT_NAME}_portainer_${ID} 配置文件已生成 OK"

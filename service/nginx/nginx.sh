@@ -39,12 +39,14 @@ fi
 port1=$5
 port2=$6
 port_group=$7
+IP=172.22.5.
 # 以下是每个nginx都会进行的操作
 sed -e "s/REPLACE_NAME/${PROJECT_NAME}_nginx_${ID}/g" \
     -e "s/REPLACE_CONTAINER_PATH/${PROJECT_NAME}_nginx_${ID}/g" \
     -e "s/REPLACE_PORT1/${port1:-80}/g" \
     -e "s/REPLACE_PORT2/${port2:-443}/g" \
     -e "s/REPLACE_PORT_GROUP/${port_group:-8001-8008}/g" \
+    -e "s/REPLACE_IP/${IP}${ID}/g" \
     $CURRENT_DIR/nginx.yml >> $PROJECT_DIR/docker-compose.yml
 
 echo "${PROJECT_NAME}_nginx_${ID} 配置文件已生成 OK"

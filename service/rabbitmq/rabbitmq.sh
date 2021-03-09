@@ -35,10 +35,12 @@ COMMON_DIR="$CURRENT_DIR/../../common"
 # 以下是每个容器都会进行的操作， ID表明为第几个容器
 port1=$5
 port2=$6
+IP=172.22.6.
 sed -e "s/REPLACE_NAME/${PROJECT_NAME}_rabbitmq_${ID}/g" \
     -e "s/REPLACE_CONTAINER_PATH/${PROJECT_NAME}_rabbitmq_${ID}/g" \
     -e "s/REPLACE_PORT1/${port1:-5672}/g" \
     -e "s/REPLACE_PORT2/${port2:-15672}/g" \
+    -e "s/REPLACE_IP/${IP}${ID}/g" \
     $CURRENT_DIR/rabbitmq.yml >> $PROJECT_DIR/docker-compose.yml
 
 echo "${PROJECT_NAME}_rabbitmq_${ID} 配置文件已生成 OK"

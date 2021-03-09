@@ -32,9 +32,10 @@ COMMON_DIR="$CURRENT_DIR/../../common"
 #if [ $ID -eq 1 ]; then
     #cp -rf $CURRENT_DIR/Dockerfile-api $PROJECT_DIR
 #fi
-
+IP=172.22.1.
 # 以下是每个api都会进行的操作
 sed -e "s/REPLACE_NAME/${PROJECT_NAME}_api_${ID}/g" \
+	-e "s/REPLACE_IP/${IP}${ID}/g" \
     $CURRENT_DIR/marchsoft-api.yml >> $PROJECT_DIR/docker-compose.yml
 
 echo "${PROJECT_NAME}_api_${ID} 配置文件已生成 OK"
