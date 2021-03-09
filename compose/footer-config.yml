@@ -1,10 +1,12 @@
 # 公共业务网桥：marchsoft_biz_net
 networks:
   marchsoft_biz_net:
+    driver: bridge
     ipam:
       config:
         - subnet: 172.22.0.0/16
-
+          gateway: 172.22.0.1
+      
 # api: 172.22.1.0 ~ 172.22.1.255
 # nvm: 172.22.2.0 ~ 172.22.2.255
 # mysql: 172.22.3.0 ~ 172.22.3.255
