@@ -35,11 +35,11 @@ prepare(){
     fi    
     
     # 创建公共业务网桥, 所有容器都使用这个网桥
-    # docker network ls | grep "marchsoft_biz_net" 2>/dev/null 1>&2
-    # if [ $? -ne 0 ]; then
-    #     docker network create --driver=bridge --subnet="172.22.0.0/16" --attachable="true" --gateway="172.22.0.1" marchsoft_biz_net
-    #     echo "未发现公共网桥，创建 network: marchsoft_biz_net"
-    # fi
+    docker network ls | grep "marchsoft_biz_net" 2>/dev/null 1>&2
+    if [ $? -ne 0 ]; then
+        docker network create --driver=bridge --subnet="172.22.0.0/16" --attachable="true" --gateway="172.22.0.1" marchsoft_biz_net
+        echo "未发现公共网桥，创建 network: marchsoft_biz_net"
+    fi
     
     # mysql 容器配置
     #for ((i=1; i<=$mysql; i++)){

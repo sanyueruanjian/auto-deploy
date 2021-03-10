@@ -2,10 +2,10 @@
 
 /usr/bin/expect << EOF
 set timeout 100
-spawn git clone -b $3 $2
+spawn git clone -b $2 $1
 expect {
-        Username {send "$4\n";exp_continue}
-        Password {send "$5\n"}
+        Username {send "$3\n";exp_continue}
+        Password {send "$4\n"}
 }
 expect {
 
