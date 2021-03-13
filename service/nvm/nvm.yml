@@ -12,5 +12,5 @@
         ipv4_address: REPLACE_IP
     volumes:
       - "${GLOBAL_PATH}/project:/project"
-    command: "/bin/bash"
+    command: bash -c "nvm install 12.14.1"
     tty: true
