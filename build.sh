@@ -179,8 +179,11 @@ echo "构建脚本 (build.sh) 执行完成"
 
 # 生成docker证书
 cd ./certs
-chmod +x docker-cert-create.sh
-bash docker-cert-create.sh
+if [ -f "ca-key.pem" -a -f "ca.pem" -a -f "cert.pem" -a -f "key.pem" -a -f "server-cert.pem" -a -f "server-key.pem" ]; then  
+else
+    chmod +x docker-cert-create.sh &&\
+    bash docker-cert-create.sh
+fi
 cd ../
 
 # 开始构建容器并启动
