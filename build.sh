@@ -180,6 +180,7 @@ echo "构建脚本 (build.sh) 执行完成"
 # 生成docker证书
 cd ./certs
 if [ -f "ca-key.pem" -a -f "ca.pem" -a -f "cert.pem" -a -f "key.pem" -a -f "server-cert.pem" -a -f "server-key.pem" ]; then  
+    echo "docker双向认证证书已创建";
 else
     chmod +x docker-cert-create.sh &&\
     bash docker-cert-create.sh
