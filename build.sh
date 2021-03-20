@@ -88,6 +88,7 @@ if [ -e "$PROJECT_DIR" ]; then
     cat $PWD/compose/compose.sh > $PROJECT_DIR/compose.sh
     # 添加执行权限
     chmod +x $PROJECT_DIR/compose.sh
+    cp ./config-list.env $PROJECT_DIR
 else
     echo "初始化项目文件夹"
     mkdir -p $PROJECT_DIR
@@ -97,6 +98,7 @@ else
     cat $PWD/compose/compose.sh > $PROJECT_DIR/compose.sh
     # 添加执行权限
     chmod +x $PROJECT_DIR/compose.sh
+    cp ./config-list.env $PROJECT_DIR
 fi
 
 
