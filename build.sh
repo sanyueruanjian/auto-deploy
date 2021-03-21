@@ -213,5 +213,5 @@ cd ../../
 cp ./obtain_project.sh $DEPLOY_PATH/$PROJECT_NAME/project
 chmod +x $DEPLOY_PATH/$PROJECT_NAME/project/obtain_project.sh
 
-echo "环境搭建完成"
+echo "环境搭建结束"
 
