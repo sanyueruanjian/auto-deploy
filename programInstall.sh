@@ -13,6 +13,7 @@ if [ `docker --version | wc -l` != 1 ];then
 	fi
 	echo -e "{\n\t\"registry-mirrors\": [\"https://6prwwss1.mirror.aliyuncs.com\"]\n}" > /etc/docker/daemon.json &&\
 	sudo systemctl daemon-reload
+	sudo service docker restart
 fi
 
 

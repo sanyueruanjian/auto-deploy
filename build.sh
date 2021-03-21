@@ -145,14 +145,14 @@ cat $PWD/compose/header-config.yml > $PROJECT_DIR/docker-compose.yml
 
 # 生成 mysql 容器配置
 for ((i=1; i<=$mysql; i++)){
-    local port=`awk -F "=" '/mysql$i_port/{print $2}' config-list.env`
+    port=`grep mysql${i}_port config-list.env | awk -F "=" '{print $2}'`
     sh $SERVICE_DIR/mysql/mysql.sh `expr $i + $mysql_ip` $SERVICE_DIR/mysql $PROJECT_NAME $PROJECT_DIR $port 
 }
 sed -i "s/mysql_ip=[0-9]*/mysql_ip=`expr $mysql_ip + $mysql`/g" ip-record.rec
 
 # 生成 nginx 部分配置
 for ((i=1; i<=$nginx; i++)){
-    local port=`awk -F "=" '/nginx$i_port/{print $2}' config-list.env`
+    port=`grep nginx${i}_port config-list.env | awk -F "=" '{print $2}'`
     sh $SERVICE_DIR/nginx/nginx.sh `expr $i + $nginx_ip` $SERVICE_DIR/nginx $PROJECT_NAME $PROJECT_DIR $port
 }
 sed -i "s/nginx_ip=[0-9]*/nginx_ip=`expr $nginx_ip + $nginx`/g" ip-record.rec
@@ -165,7 +165,7 @@ sed -i "s/nvm_ip=[0-9]*/nvm_ip=`expr $nvm_ip + $nvm`/g" ip-record.rec
 
 # 生成 redis 容器配置
 for ((i=1; i<=$redis; i++)){
-    local port=`awk -F "=" '/redis$i_port/{print $2}' config-list.env`
+    port=`grep redis${i}_port config-list.env | awk -F "=" '{print $2}'`
     sh $SERVICE_DIR/redis/redis.sh `expr $i + $redis_ip` $SERVICE_DIR/redis $PROJECT_NAME $PROJECT_DIR $port
 }
 sed -i "s/redis_ip=[0-9]*/redis_ip=`expr $redis_ip + $redis`/g" ip-record.rec
@@ -178,14 +178,14 @@ sed -i "s/api_ip=[0-9]*/api_ip=`expr $marchsoft_api_ip + $marchsoft_api`/g" ip-r
 
 # 生成 rabbitmq 容器配置
 for ((i=1; i<=$rabbitmq; i++)){
-    local port=`awk -F "=" '/rabbtimq$i_port/{print $2}' config-list.env`
+    port=`grep rabbtimq${i}_port config-list.env | awk -F "=" '{print $2}'`
     sh $SERVICE_DIR/rabbitmq/rabbitmq.sh `expr $i + $rabbitmq_ip` $SERVICE_DIR/rabbitmq $PROJECT_NAME $PROJECT_DIR $port
 }
 sed -i "s/rabbitmq_ip=[0-9]*/rabbitmq_ip=`expr $rabbitmq_ip + $rabbitmq`/g" ip-record.rec
 
 # 生成 portainer 部分配置
 for ((i=1; i<=$portainer; i++)){
-    local port=`awk -F "=" '/portainer$i_port/{print $2}' config-list.env`
+    port=`grep portainer${i}_port config-list.env | awk -F "=" '{print $2}'`
     sh $SERVICE_DIR/portainer/portainer.sh `expr $i + $portainer_ip` $SERVICE_DIR/portainer $PROJECT_NAME $PROJECT_DIR $port
 }
 sed -i "s/portainer_ip=[0-9]*/portainer_ip=`expr $portainer_ip + $portainer`/g" ip-record.rec
