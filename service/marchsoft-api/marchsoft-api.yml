@@ -21,5 +21,5 @@
       #- rabbitmq
       #- nginx
     # 没有进程运行，容器启动后会自动停止，使用tty阻塞容器
-    command: "/bin/bash"
+    command: "yum install expect -y && /bin/bash"
     tty: true
