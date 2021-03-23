@@ -23,7 +23,7 @@ fi
 if [ `git --version | wc -l` != '1' ];then sudo yum install git -y;fi
 
 # expect安装 expect用于提供脚本和控制台交互功能
-if [ `yum list installed | grep expect | wc -l` != '1' ];then sudo yum install expect -y;fi;
+if [ `expect -version | wc -l` != '1' ];then sudo yum install expect -y;fi;
 
 
 # curl icanhazip.com
