@@ -4,9 +4,7 @@
 
 ## 项目简介（Introduction）
 
-基于 docker、docker-compose、shell 的自动化构建和编排容器。使用时仅需一点 linux 基础即可轻松构建多个容器。
-
-**项目状态:** 基本功能已经完成，正在完善细节。
+基于 docker、docker-compose、shell 的自动化构建和编排容器脚本。使用时仅需一点 linux 基础即可轻松构建多个容器。
 
 ## 主要特性（ Characteristic）
 
